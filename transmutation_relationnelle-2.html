@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transmutation Relationnelle — Princesse Tchassi</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #E8A598;
+    --saumon: #D4795F;
+    --terracota: #B85C44;
+    --or: #C9A96E;
+    --or-light: #E8D5A8;
+    --blanc: #FDF8F5;
+    --creme: #F5EDE6;
+    --brun: #3D1F15;
+    --brun-light: #6B3D2E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--blanc);
+    color: var(--brun);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #2A0F08 0%, #4A1E14 40%, #6B3020 70%, #8B4530 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(201,169,110,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(232,165,152,0.12) 0%, transparent 50%);
+  }
+
+  .hero-grain {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .hero-ornament {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--or);
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    opacity: 0.7;
+  }
+
+  .hero-content {
+    text-align: center;
+    padding: 80px 40px;
+    max-width: 900px;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1.2s ease both;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 8px;
+    color: var(--or);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.2s both;
+  }
+
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(42px, 8vw, 88px);
+    font-weight: 700;
+    line-height: 1.0;
+    color: var(--blanc);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.4s both;
+  }
+
+  .hero-title span {
+    color: var(--or);
+    display: block;
+    font-weight: 400;
+    font-size: 0.55em;
+    letter-spacing: 4px;
+    margin-top: 8px;
+  }
+
+  .hero-sep {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--or), transparent);
+    margin: 32px auto;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.6s both;
+  }
+
+  .hero-sub {
+    font-size: clamp(18px, 3vw, 26px);
+    font-style: italic;
+    color: rgba(253,248,245,0.85);
+    line-height: 1.6;
+    max-width: 680px;
+    margin: 0 auto 48px;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.8s both;
+  }
+
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeUp 1s ease 1s both;
+  }
+
+  .badge {
+    background: rgba(201,169,110,0.15);
+    border: 1px solid rgba(201,169,110,0.4);
+    color: var(--or-light);
+    padding: 8px 22px;
+    font-family: 'Lato', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--or);
+    opacity: 0.5;
+    font-size: 20px;
+    animation: bounce 2s ease infinite;
+  }
+
+  /* ── INTRO IMPACT ── */
+  .intro-impact {
+    background: var(--creme);
+    padding: 100px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .intro-impact::before {
+    content: '"';
+    position: absolute;
+    top: -40px;
+    left: 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 300px;
+    color: var(--rose);
+    opacity: 0.06;
+    line-height: 1;
+  }
+
+  .intro-inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .intro-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 6px;
+    color: var(--terracota);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .intro-big {
+    font-size: clamp(26px, 4vw, 42px);
+    font-weight: 300;
+    line-height: 1.4;
+    color: var(--brun);
+    margin-bottom: 40px;
+  }
+
+  .intro-big strong {
+    color: var(--terracota);
+    font-weight: 600;
+    font-style: italic;
+  }
+
+  .intro-body {
+    font-size: 19px;
+    line-height: 1.9;
+    color: var(--brun-light);
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+
+  .intro-body strong {
+    color: var(--brun);
+    font-weight: 600;
+  }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin: 60px 0;
+    border: 1px solid var(--rose);
+  }
+
+  .stat-item {
+    padding: 40px 24px;
+    text-align: center;
+    background: var(--blanc);
+    border-right: 1px solid var(--rose);
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-size: 44px;
+    color: var(--terracota);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 14px;
+    color: var(--brun-light);
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  .pull-quote {
+    border-left: 3px solid var(--or);
+    padding: 24px 36px;
+    margin: 48px 0;
+    background: linear-gradient(135deg, rgba(201,169,110,0.05), transparent);
+  }
+
+  .pull-quote p {
+    font-size: clamp(22px, 3vw, 32px);
+    font-style: italic;
+    color: var(--brun);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  .pull-quote cite {
+    display: block;
+    margin-top: 16px;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--or);
+    font-style: normal;
+    font-family: 'Cinzel', serif;
+  }
+
+  /* ── POUR QUI ── */
+  .pour-qui {
+    background: linear-gradient(135deg, var(--terracota) 0%, var(--brun-light) 100%);
+    padding: 100px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pour-qui::after {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    right: -80px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 60px solid rgba(201,169,110,0.08);
+  }
+
+  .pq-inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 5vw, 50px);
+    font-weight: 400;
+    margin-bottom: 16px;
+  }
+
+  .section-title.light { color: var(--blanc); }
+  .section-title.dark { color: var(--brun); }
+
+  .section-sub {
+    font-size: 18px;
+    font-style: italic;
+    margin-bottom: 56px;
+    font-weight: 300;
+  }
+
+  .section-sub.light { color: rgba(253,248,245,0.75); }
+  .section-sub.dark { color: var(--brun-light); }
+
+  .checks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .check-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(201,169,110,0.2);
+    padding: 24px;
+  }
+
+  .check-icon {
+    color: var(--or);
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .check-text {
+    color: var(--blanc);
+    font-size: 17px;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .check-text strong {
+    color: var(--or-light);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
+    font-size: 16px;
+    font-family: 'Lato', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+
+  /* ── PROGRAMME ── */
+  .programme {
+    background: var(--blanc);
+    padding: 100px 40px;
+  }
+
+  .prog-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .prog-header {
+    text-align: center;
+    margin-bottom: 72px;
+  }
+
+  .days-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .day-card {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    border: 1px solid #e8d5c4;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: default;
+  }
+
+  .day-card:hover {
+    border-color: var(--or);
+    transform: translateX(4px);
+    box-shadow: -4px 0 0 var(--terracota);
+  }
+
+  .day-num {
+    background: linear-gradient(160deg, var(--terracota), var(--brun-light));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+    text-align: center;
+  }
+
+  .day-num span:first-child {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: rgba(253,248,245,0.6);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .day-num span:last-child {
+    font-family: 'Cinzel', serif;
+    font-size: 36px;
+    color: var(--or);
+    line-height: 1;
+  }
+
+  .day-content {
+    padding: 32px 36px;
+    background: var(--blanc);
+  }
+
+  .day-theme {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    color: var(--brun);
+    margin-bottom: 8px;
+  }
+
+  .day-sous {
+    font-size: 15px;
+    font-style: italic;
+    color: var(--terracota);
+    margin-bottom: 16px;
+  }
+
+  .day-desc {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--brun-light);
+    font-weight: 300;
+  }
+
+  .day-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+
+  .tag {
+    background: var(--creme);
+    border: 1px solid var(--rose);
+    color: var(--terracota);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+  }
+
+  /* ── MÉTHODE ── */
+  .methode {
+    background: var(--creme);
+    padding: 100px 40px;
+  }
+
+  .meth-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .meth-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    margin-top: 56px;
+  }
+
+  .meth-card {
+    padding: 40px 28px;
+    background: var(--blanc);
+    border-top: 3px solid var(--or);
+    position: relative;
+  }
+
+  .meth-icon {
+    font-size: 32px;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .meth-title {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    color: var(--terracota);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  .meth-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--brun-light);
+    font-weight: 300;
+  }
+
+  /* ── TRANSFORMATIONS ── */
+  .transfo {
+    background: linear-gradient(170deg, #1A0808 0%, #2D1010 50%, #401818 100%);
+    padding: 100px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .transfo::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 70%);
+  }
+
+  .transfo-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .before-after {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 0;
+    margin-top: 60px;
+    align-items: stretch;
+  }
+
+  .ba-col {
+    padding: 48px 36px;
+  }
+
+  .ba-col.before {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .ba-col.after {
+    background: rgba(201,169,110,0.08);
+    border: 1px solid rgba(201,169,110,0.25);
+  }
+
+  .ba-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--or);
+    font-size: 24px;
+  }
+
+  .ba-label {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    margin-bottom: 32px;
+    text-transform: uppercase;
+  }
+
+  .ba-label.before-label { color: rgba(253,248,245,0.4); }
+  .ba-label.after-label { color: var(--or); }
+
+  .ba-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .ba-list li {
+    font-size: 16px;
+    line-height: 1.6;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .ba-list li.before-item { color: rgba(253,248,245,0.55); font-weight: 300; }
+  .ba-list li.after-item { color: var(--blanc); font-weight: 300; }
+
+  .ba-list li span:first-child {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .before-item span:first-child { color: rgba(255,255,255,0.2); }
+  .after-item span:first-child { color: var(--or); }
+
+  /* ── PRINCESSE ── */
+  .princesse {
+    background: var(--blanc);
+    padding: 100px 40px;
+  }
+
+  .pr-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 72px;
+    align-items: start;
+  }
+
+  .pr-visual {
+    position: sticky;
+    top: 40px;
+  }
+
+  .pr-frame {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, var(--rose), var(--terracota));
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pr-frame::after {
+    content: 'P';
+    position: absolute;
+    bottom: -20px;
+    right: -10px;
+    font-family: 'Cinzel', serif;
+    font-size: 180px;
+    color: rgba(255,255,255,0.08);
+    line-height: 1;
+    font-weight: 700;
+  }
+
+  .pr-name {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--terracota);
+    text-transform: uppercase;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .pr-content .section-title {
+    margin-bottom: 8px;
+  }
+
+  .pr-content .section-sub {
+    margin-bottom: 32px;
+  }
+
+  .pr-body {
+    font-size: 18px;
+    line-height: 1.9;
+    color: var(--brun-light);
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+
+  .pr-body strong {
+    color: var(--brun);
+    font-weight: 600;
+  }
+
+  /* ── OFFRE ── */
+  .offre {
+    background: linear-gradient(160deg, var(--terracota) 0%, #7A2E1A 100%);
+    padding: 100px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .offre::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,169,110,0.15) 0%, transparent 60%);
+  }
+
+  .offre-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .offre-box {
+    border: 1px solid rgba(201,169,110,0.4);
+    padding: 64px 56px;
+    background: rgba(0,0,0,0.15);
+    margin-top: 48px;
+    position: relative;
+  }
+
+  .offre-box::before {
+    content: '✦';
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--terracota);
+    padding: 0 16px;
+    color: var(--or);
+    font-size: 20px;
+  }
+
+  .price-main {
+    font-family: 'Cinzel', serif;
+    font-size: 80px;
+    color: var(--blanc);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .price-main sup {
+    font-size: 32px;
+    vertical-align: super;
+  }
+
+  .price-sub {
+    font-size: 16px;
+    color: rgba(253,248,245,0.65);
+    font-style: italic;
+    margin-bottom: 32px;
+  }
+
+  .price-klarna {
+    background: rgba(201,169,110,0.12);
+    border: 1px solid rgba(201,169,110,0.3);
+    padding: 20px 32px;
+    margin: 28px auto;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .price-klarna p {
+    color: var(--or-light);
+    font-size: 16px;
+    font-style: italic;
+  }
+
+  .price-klarna strong {
+    color: var(--or);
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .inclu-list {
+    list-style: none;
+    text-align: left;
+    margin: 32px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .inclu-list li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    color: var(--blanc);
+    font-size: 17px;
+    font-weight: 300;
+  }
+
+  .inclu-list li::before {
+    content: '✦';
+    color: var(--or);
+    flex-shrink: 0;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .urgence {
+    background: rgba(201,169,110,0.15);
+    border: 1px solid rgba(201,169,110,0.35);
+    padding: 16px 24px;
+    margin-bottom: 36px;
+    color: var(--or-light);
+    font-size: 15px;
+    font-style: italic;
+  }
+
+  .urgence strong {
+    color: var(--or);
+    font-style: normal;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--or), #B8860B);
+    color: var(--brun);
+    padding: 22px 60px;
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    width: 100%;
+    transition: all 0.3s ease;
+    margin-bottom: 16px;
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(201,169,110,0.4);
+  }
+
+  .cta-klarna {
+    display: inline-block;
+    background: transparent;
+    color: var(--or-light);
+    padding: 18px 60px;
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(201,169,110,0.4);
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+    font-weight: 300;
+  }
+
+  .cta-klarna:hover {
+    border-color: var(--or);
+    color: var(--or);
+    background: rgba(201,169,110,0.05);
+  }
+
+  .cta-note {
+    color: rgba(253,248,245,0.4);
+    font-size: 12px;
+    margin-top: 16px;
+    font-style: italic;
+  }
+
+  /* ── FAQ ── */
+  .faq {
+    background: var(--creme);
+    padding: 100px 40px;
+  }
+
+  .faq-inner {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .faq-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid rgba(184,92,68,0.2);
+    padding: 28px 0;
+  }
+
+  .faq-q {
+    font-family: 'Cinzel', serif;
+    font-size: 17px;
+    color: var(--brun);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .faq-q .faq-arrow {
+    color: var(--terracota);
+    font-size: 20px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-a {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--brun-light);
+    font-weight: 300;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+  }
+
+  .faq-item.open .faq-a {
+    max-height: 300px;
+    padding-top: 20px;
+  }
+
+  .faq-item.open .faq-arrow {
+    transform: rotate(45deg);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--brun);
+    padding: 60px 40px;
+    text-align: center;
+  }
+
+  .footer-name {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    color: var(--or);
+    margin-bottom: 12px;
+  }
+
+  .footer-links {
+    font-size: 14px;
+    color: rgba(253,248,245,0.4);
+    font-style: italic;
+  }
+
+  .footer-links a {
+    color: rgba(253,248,245,0.4);
+    text-decoration: none;
+    margin: 0 12px;
+  }
+
+  .footer-sep {
+    width: 60px;
+    height: 1px;
+    background: var(--or);
+    margin: 24px auto;
+    opacity: 0.4;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .checks { grid-template-columns: 1fr; }
+    .meth-grid { grid-template-columns: 1fr; }
+    .before-after { grid-template-columns: 1fr; }
+    .ba-arrow { display: none; }
+    .pr-inner { grid-template-columns: 1fr; }
+    .stat-row { grid-template-columns: 1fr; }
+    .day-card { grid-template-columns: 70px 1fr; }
+    .offre-box { padding: 40px 24px; }
+    .pr-visual { position: relative; top: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grain"></div>
+  <div class="hero-ornament">Princesse Tchassi — Programme Collectif</div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Programme d'accompagnement collectif · Une session par mois</p>
+    <h1 class="hero-title">
+      TRANSMUTATION
+      <span>Relationnelle</span>
+    </h1>
+    <div class="hero-sep"></div>
+    <p class="hero-sub">Psychothérapie énergétique · Stratégie · Radiesthésie<br>Reprendre le pouvoir total sur votre domaine relationnel — et enfin libérer l'énergie que vous y avez enfouie.</p>
+    <div class="hero-badges">
+      <span class="badge">1 session par mois</span>
+      <span class="badge">Groupe fermé</span>
+      <span class="badge">10 places maximum</span>
+    </div>
+  </div>
+  <div class="hero-scroll">↓</div>
+</section>
+
+<!-- INTRO IMPACT -->
+<section class="intro-impact">
+  <div class="intro-inner reveal">
+    <p class="intro-label">Pourquoi ce programme existe</p>
+    <h2 class="intro-big">
+      Votre domaine relationnel n'est pas un problème de cœur.<br>
+      C'est un <strong>problème d'énergie — et d'argent.</strong>
+    </h2>
+    <p class="intro-body">
+      Ce que peu de gens osent dire clairement : <strong>le désordre relationnel coûte une fortune.</strong> Pas seulement émotionnellement. Financièrement. Vibratoire­ment. Concrètement.
+    </p>
+    <p class="intro-body">
+      Chaque relation qui vous draine mobilise une part énorme de votre attention, de votre énergie mentale, de votre créativité. Toute cette puissance qui pourrait servir à construire, à créer, à générer — elle est absorbée par des cycles d'hypervigilance, d'attente, d'analyse, de douleur.
+    </p>
+    <p class="intro-body">
+      On passe des heures à décortiquer un message. Des nuits à rejouer des conversations. Des semaines à gérer les conséquences émotionnelles d'une relation qui ne nourrit pas. <strong>Pendant ce temps, la vision stagne. L'argent stagne. La vie stagne.</strong>
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-item">
+        <span class="stat-num">78%</span>
+        <span class="stat-label">de notre énergie quotidienne est consumée par nos dynamiques relationnelles non résolues</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">∞</span>
+        <span class="stat-label">le coût vibratoire d'un schéma qui se répète pendant des années sans être adressé</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">6</span>
+        <span class="stat-label">jours pour transmuter ce qui vous coûte tout depuis trop longtemps — une session par mois</span>
+      </div>
+    </div>
+
+    <p class="intro-body">
+      La survie émotionnelle n'est pas une fatalité. C'est un programme. Un programme installé avant que vous puissiez le questionner — dans votre enfance, dans vos premières relations, dans vos lignées. Et tout programme qui a été installé <strong>peut être reprogrammé.</strong>
+    </p>
+    <p class="intro-body">
+      C'est exactement ce que nous allons faire ensemble.
+    </p>
+
+    <div class="pull-quote">
+      <p>« Vous n'attirez pas les relations que vous voulez. Vous attirez les relations que vous êtes programmée à reconnaître comme normales. »</p>
+      <cite>— Princesse Tchassi</cite>
+    </div>
+  </div>
+</section>
+
+<!-- POUR QUI -->
+<section class="pour-qui">
+  <div class="pq-inner reveal">
+    <h2 class="section-title light">Ce programme est pour vous si…</h2>
+    <p class="section-sub light">Vous vous reconnaissez dans au moins 3 de ces portraits</p>
+    <div class="checks">
+      <div class="check-item">
+        <span class="check-icon">◈</span>
+        <div class="check-text">
+          <strong>Le schéma répétitif</strong>
+          On change de partenaire, d'amis, de travail — mais les mêmes dynamiques reviennent. Différents visages, même histoire.
+        </div>
+      </div>
+      <div class="check-item">
+        <span class="check-icon">◈</span>
+        <div class="check-text">
+          <strong>L'hypervigilance permanente</strong>
+          On analyse chaque mot, chaque silence. On s'épuise à lire dans les pensées des autres pour anticiper leur rejet.
+        </div>
+      </div>
+      <div class="check-item">
+        <span class="check-icon">◈</span>
+        <div class="check-text">
+          <strong>Le sur-don</strong>
+          On donne tout dans ses relations — temps, énergie, argent — sans jamais recevoir en proportion. Et on ne sait pas comment arrêter.
+        </div>
+      </div>
+      <div class="check-item">
+        <span class="check-icon">◈</span>
+        <div class="check-text">
+          <strong>La blessure d'abandon ou de rejet</strong>
+          On a peur d'être quitté(e), rejeté(e), oublié(e). Cette peur dicte les choix relationnels sans qu'on l'ait décidé.
+        </div>
+      </div>
+      <div class="check-item">
+        <span class="check-icon">◈</span>
+        <div class="check-text">
+          <strong>L'argent qui ne reste pas</strong>
+          On génère de l'argent mais il disparaît. On le sabote. Ou on n'ose pas en demander davantage. Le matériel est bloqué — et la cause est relationnelle.
+        </div>
+      </div>
+      <div class="check-item">
+        <span class="check-icon">◈</span>
+        <div class="check-text">
+          <strong>La fatigue de tout porter</strong>
+          On a l'impression d'être seul(e) même entouré(e). On porte tout le monde mais personne ne nous porte. L'épuisement est réel.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMME -->
+<section class="programme">
+  <div class="prog-inner reveal">
+    <div class="prog-header">
+      <h2 class="section-title dark">Les 6 dimensions que nous allons transmuter</h2>
+      <p class="section-sub dark">6 jours consécutifs · Enseignement + Soin énergétique + Scan radiesthésique individuel · Chaque jour</p>
+    </div>
+    <div class="days-grid">
+
+      <div class="day-card">
+        <div class="day-num"><span>Jour</span><span>1</span></div>
+        <div class="day-content">
+          <div class="day-theme">La relation à soi-même</div>
+          <div class="day-sous">Le socle de tout — si on ne se connaît pas, on ne peut pas lire ses relations</div>
+          <div class="day-desc">On pose les fondations. Identifier le programme-mère, les croyances sur sa propre valeur, les masques portés depuis trop longtemps. Suivi d'un <strong>soin énergétique de récupération</strong> pour commencer à libérer ce qui a été identifié et réaligner le taux vibratoire.</div>
+          <div class="day-tags">
+            <span class="tag">Estime de soi</span>
+            <span class="tag">Programme enfant</span>
+            <span class="tag">Soin vibratoire</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num"><span>Jour</span><span>2</span></div>
+        <div class="day-content">
+          <div class="day-theme">La relation amoureuse</div>
+          <div class="day-sous">Ce qu'on cherche dans le partenaire qu'on attire — et ce que ça dit de soi</div>
+          <div class="day-desc">Décoder les schémas amoureux, le principe intérieur blessé, l'attraction pour ce qui détruit plutôt que pour ce qui construit. <strong>Soin énergétique de transmutation</strong> : récupération de l'énergie investie dans les anciennes dynamiques amoureuses, réalignement du champ cardiaque.</div>
+          <div class="day-tags">
+            <span class="tag">Attachement</span>
+            <span class="tag">Champ cardiaque</span>
+            <span class="tag">Transmutation</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num"><span>Jour</span><span>3</span></div>
+        <div class="day-content">
+          <div class="day-theme">La relation maternelle</div>
+          <div class="day-sous">Le premier programme — celui qui a tout configuré</div>
+          <div class="day-desc">La mère comme premier modèle du lien. Les transmissions ancestrales. Ce qu'on a dû être pour mériter l'amour. <strong>Soin énergétique ancestral</strong> : travail sur la lignée maternelle, nettoyage des contrats hérités, récupération de l'énergie captive dans la blessure maternelle.</div>
+          <div class="day-tags">
+            <span class="tag">Lignée maternelle</span>
+            <span class="tag">Guérison ancestrale</span>
+            <span class="tag">Champ magnétique</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num"><span>Jour</span><span>4</span></div>
+        <div class="day-content">
+          <div class="day-theme">La relation paternelle</div>
+          <div class="day-sous">Ce que la première figure d'autorité a appris sur l'amour et la structure</div>
+          <div class="day-desc">La blessure paternelle et ses conséquences dans le choix des partenaires, dans la confiance à l'autorité, dans la relation à la structure et à la sécurité. <strong>Soin énergétique de réalignement</strong> : restauration du champ électrique, récupération de la puissance captive dans la relation paternelle.</div>
+          <div class="day-tags">
+            <span class="tag">Lignée paternelle</span>
+            <span class="tag">Champ électrique</span>
+            <span class="tag">Souveraineté</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num"><span>Jour</span><span>5</span></div>
+        <div class="day-content">
+          <div class="day-theme">La relation aux amis / au collectif</div>
+          <div class="day-sous">Le miroir social — ce que les amitiés révèlent de soi</div>
+          <div class="day-desc">La compétition, la jalousie, l'isolement. Construire des liens collectifs véritables en sortant du social blessé pour entrer dans le social souverain. <strong>Soin énergétique collectif</strong> : harmonisation du taux vibratoire de groupe, nettoyage des liens toxiques dans la sphère sociale.</div>
+          <div class="day-tags">
+            <span class="tag">Liens sociaux</span>
+            <span class="tag">Taux vibratoire</span>
+            <span class="tag">Souveraineté sociale</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card" style="border-color: var(--or); box-shadow: 0 0 0 1px rgba(201,169,110,0.3);">
+        <div class="day-num" style="background: linear-gradient(160deg, #8B0000, #4A0010);"><span>Jour</span><span>6</span></div>
+        <div class="day-content" style="background: linear-gradient(135deg, #FDF8F5, #FDF0E8);">
+          <div class="day-theme" style="color: var(--terracota);">La relation à l'argent · Régénération & Activation ADN</div>
+          <div class="day-sous" style="color: var(--brun);">La session de clôture — un nouveau départ à fréquence souveraine</div>
+          <div class="day-desc">La relation à l'argent comme miroir final de la valeur perçue. En clôture : une <strong>régénération et activation des brins d'ADN</strong> — une transmission énergétique profonde destinée à ancrer dans la biologie même la fréquence du soin, de la réception et de l'abondance. À l'issue de ces 6 jours, le taux vibratoire, le champ magnétique et le champ électrique seront intégralement réalignés à la vraie fréquence.</div>
+          <div class="day-tags">
+            <span class="tag" style="border-color: var(--or); color: var(--terracota);">Activation ADN</span>
+            <span class="tag" style="border-color: var(--or); color: var(--terracota);">Régénération</span>
+            <span class="tag" style="border-color: var(--or); color: var(--terracota);">Champ magnétique</span>
+            <span class="tag" style="border-color: var(--or); color: var(--terracota);">Fréquence souveraine</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MÉTHODE -->
+<section class="methode">
+  <div class="meth-inner reveal">
+    <h2 class="section-title dark">Une méthode en quatre dimensions</h2>
+    <p class="section-sub dark">Pas de développement personnel en surface. On va à la racine — et on régénère.</p>
+    <div class="meth-grid" style="grid-template-columns: repeat(2, 1fr);">
+      <div class="meth-card">
+        <span class="meth-icon">◈</span>
+        <div class="meth-title">Psychothérapie Énergétique</div>
+        <div class="meth-text">Identification des blessures profondes, des mécanismes de défense, des croyances installées dans l'enfance. Travail sur le corps, les émotions, la mémoire cellulaire.</div>
+      </div>
+      <div class="meth-card">
+        <span class="meth-icon">✦</span>
+        <div class="meth-title">Radiesthésie & Scan Vibratoire</div>
+        <div class="meth-text">Chaque session inclut un scan en direct d'une participante. La radiesthésie révèle ce que l'introspection seule ne peut pas atteindre — le champ, les contrats actifs, les blocages énergétiques profonds.</div>
+      </div>
+      <div class="meth-card">
+        <span class="meth-icon">◯</span>
+        <div class="meth-title">Soins Énergétiques Quotidiens</div>
+        <div class="meth-text">Chaque jour, un soin énergétique ciblé : transmutation de ce qui a été identifié, récupération de l'énergie captive dans les dynamiques blessées, réalignement du taux vibratoire, du champ magnétique et du champ électrique à votre vraie fréquence.</div>
+      </div>
+      <div class="meth-card" style="border-top-color: var(--terracota);">
+        <span class="meth-icon">⟡</span>
+        <div class="meth-title">Activation & Régénération ADN</div>
+        <div class="meth-text">En clôture du programme, le Jour 6 est dédié à une régénération et activation des brins d'ADN — une transmission qui ancre dans votre biologie même la fréquence du soin, de la réception et de la souveraineté. Pas une métaphore. Un travail énergétique profond.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONSULTANTE ATTITRÉE -->
+<section style="background: linear-gradient(135deg, #FDF0E8, #F5EDE6); padding: 100px 40px;">
+  <div style="max-width: 860px; margin: 0 auto;" class="reveal">
+    <div style="text-align: center; margin-bottom: 60px;">
+      <p style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 6px; color: var(--terracota); text-transform: uppercase; margin-bottom: 16px;">Une attention entièrement personnelle</p>
+      <h2 class="section-title dark">Votre consultant(e) attitré(e)</h2>
+      <p class="section-sub dark">Sélectionné(e) par matching vibratoire — pas au hasard</p>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px;">
+      <div style="background: var(--blanc); border-top: 3px solid var(--or); padding: 40px 32px;">
+        <div style="font-size: 28px; margin-bottom: 16px;">◈</div>
+        <div style="font-family: 'Cinzel', serif; font-size: 14px; color: var(--terracota); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;">Un lien vibratoire, pas un tirage au sort</div>
+        <p style="font-size: 17px; line-height: 1.8; color: var(--brun-light); font-weight: 300;">Avant le début du programme, chaque participant(e) est associé(e) à un(e) consultant(e) en radiesthésie par <strong style="color: var(--brun);">matching vibratoire</strong>. Cette sélection n'est pas administrative — elle est énergétique. Le ou la consultant(e) attitré(e) est celui ou celle dont le champ est le plus aligné pour assurer la meilleure lecture, la meilleure transmission, et la meilleure évolution possible.</p>
+      </div>
+      <div style="background: var(--blanc); border-top: 3px solid var(--or); padding: 40px 32px;">
+        <div style="font-size: 28px; margin-bottom: 16px;">✦</div>
+        <div style="font-family: 'Cinzel', serif; font-size: 14px; color: var(--terracota); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;">Responsable des scans quotidiens</div>
+        <p style="font-size: 17px; line-height: 1.8; color: var(--brun-light); font-weight: 300;">Pendant les 6 jours, le ou la consultant(e) attitré(e) suit l'évolution en continu. Il ou elle lit les devoirs de la veille, observe l'introspection, réalise les scans quotidiens et ajuste sa lecture à ce qui est réellement traversé — jour après jour, sans rupture de fil.</p>
+      </div>
+      <div style="background: var(--blanc); border-top: 3px solid var(--or); padding: 40px 32px;">
+        <div style="font-size: 28px; margin-bottom: 16px;">⟡</div>
+        <div style="font-family: 'Cinzel', serif; font-size: 14px; color: var(--terracota); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;">Une porte ouverte sur l'après</div>
+        <p style="font-size: 17px; line-height: 1.8; color: var(--brun-light); font-weight: 300;">À l'issue du programme, si la poursuite de l'accompagnement est souhaitée, il est possible de continuer avec son ou sa consultant(e) attitré(e) dans un cadre de suivi individuel. La continuité du lien vibratoire déjà établi rend ce suivi d'autant plus puissant.</p>
+      </div>
+      <div style="background: linear-gradient(135deg, rgba(184,92,68,0.05), var(--blanc)); border-top: 3px solid var(--terracota); padding: 40px 32px;">
+        <div style="font-size: 28px; margin-bottom: 16px; color: var(--terracota);">◯</div>
+        <div style="font-family: 'Cinzel', serif; font-size: 14px; color: var(--terracota); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;">Des consultant(e)s formé(e)s et sélectionné(e)s</div>
+        <p style="font-size: 17px; line-height: 1.8; color: var(--brun-light); font-weight: 300;">Les consultant(e)s qui interviennent dans ce programme sont des praticien(ne)s en radiesthésie sélectionné(e)s et formé(e)s dans l'exigence. Ils et elles ne sont pas interchangeables. Leur mission est de garantir l'évolution de chaque participant(e) — et le matching vibratoire qui préside à leur attribution est lui-même une garantie de cette exigence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AVANT / APRÈS -->
+<section class="transfo">
+  <div class="transfo-inner reveal">
+    <h2 class="section-title light" style="text-align:center;">Ce qui change — concrètement</h2>
+    <p class="section-sub light" style="text-align:center;">La transformation que vous venez chercher</p>
+    <div class="before-after">
+      <div class="ba-col before">
+        <div class="ba-label before-label">Avant le programme</div>
+        <ul class="ba-list">
+          <li class="before-item"><span>✕</span><span>On subit ses relations sans comprendre pourquoi elles se reproduisent</span></li>
+          <li class="before-item"><span>✕</span><span>L'énergie est consommée par l'hypervigilance et l'analyse obsessionnelle</span></li>
+          <li class="before-item"><span>✕</span><span>On s'adapte aux besoins des autres en oubliant les siens</span></li>
+          <li class="before-item"><span>✕</span><span>L'argent ne suit pas, malgré le travail et l'investissement</span></li>
+          <li class="before-item"><span>✕</span><span>On est épuisé(e) de porter des dynamiques qui n'appartiennent pas</span></li>
+          <li class="before-item"><span>✕</span><span>On sait que quelque chose doit changer — mais on ne sait pas par où commencer</span></li>
+        </ul>
+      </div>
+      <div class="ba-arrow">→</div>
+      <div class="ba-col after">
+        <div class="ba-label after-label">Après le programme</div>
+        <ul class="ba-list">
+          <li class="after-item"><span>✦</span><span>On lit ses relations comme des informations vibratoires, non comme des injustices</span></li>
+          <li class="after-item"><span>✦</span><span>L'énergie est disponible pour créer, construire, rayonner</span></li>
+          <li class="after-item"><span>✦</span><span>On choisit consciemment — ses limites, ses liens, son niveau de disponibilité</span></li>
+          <li class="after-item"><span>✦</span><span>Le champ matériel commence à refléter le travail intérieur accompli</span></li>
+          <li class="after-item"><span>✦</span><span>On porte uniquement ce qui nous appartient — et on pose le reste</span></li>
+          <li class="after-item"><span>✦</span><span>On avance avec clarté, ancrage et une connaissance réelle de soi-même</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCESSE -->
+<section class="princesse">
+  <div class="pr-inner reveal">
+    <div class="pr-visual">
+      <div class="pr-frame"></div>
+      <div class="pr-name">Princesse Tchassi</div>
+    </div>
+    <div class="pr-content">
+      <h2 class="section-title dark">Votre accompagnatrice</h2>
+      <p class="section-sub dark">Praticienne en Haute Recherche Vibratoire · Éducatrice du féminin · Fondatrice de MUSTORIES</p>
+      <p class="pr-body">
+        Je suis Princesse Tchassi. J'accompagne des femmes à <strong>reprendre leur puissance dans les domaines qui coûtent le plus cher</strong> — les relations, l'argent, l'identité profonde.
+      </p>
+      <p class="pr-body">
+        Ma méthode de travail combine la radiesthésie et l'analyse vibratoire des champs avec une approche psycho-énergétique ancrée dans le réel. Je ne travaille pas en surface. Je travaille à l'endroit où les choses se sont installées — dans le système nerveux, dans la mémoire cellulaire, dans les contrats d'âme actifs.
+      </p>
+      <p class="pr-body">
+        <strong>Ce programme est né d'une conviction profonde :</strong> tant que le domaine relationnel n'est pas transmué, rien d'autre ne peut vraiment se construire. L'énergie reste prise. L'attention reste captive. Et la vie que vous voulez reste hors de portée — non par manque de talent ou de travail, mais parce que le terreau n'est pas libre.
+      </p>
+      <p class="pr-body">
+        Ce groupe est conçu pour 10 femmes maximum. Pas par hasard — parce que ce travail demande de la profondeur, de la sécurité, et une présence réelle. Vous ne serez pas un numéro. Vous serez vue.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- OFFRE -->
+<section class="offre">
+  <div class="offre-inner reveal">
+    <h2 class="section-title light">Rejoindre le programme</h2>
+    <p class="section-sub light">Un investissement dans la seule chose qui change vraiment tout le reste</p>
+
+    <div class="offre-box">
+      <div class="price-main"><sup>€</sup>600</div>
+      <div class="price-sub">Accès complet au programme · 10 places maximum · Une session par mois</div>
+
+      <div class="price-klarna">
+        <strong>3 × 200€</strong>
+        <p>Paiement en 3 fois disponible via Klarna — sous réserve d'acceptation</p>
+      </div>
+
+      <ul class="inclu-list">
+        <li>6 sessions lives sur Google Meet — enseignement doctrinal + soin énergétique collectif + transmission</li>
+        <li>1 scan radiesthésique individuel par jour pour chaque participant(e) — observation des devoirs de la veille et de l'introspection, en direct</li>
+        <li>Un(e) <strong>consultant(e) attitré(e)</strong> assigné(e) par matching vibratoire — responsable des scans quotidiens tout au long du programme</li>
+        <li>1 soin énergétique par jour — transmutation, récupération d'énergie, réalignement vibratoire</li>
+        <li>Réalignement complet du taux vibratoire, du champ magnétique et du champ électrique sur 6 jours</li>
+        <li>Jour 6 : régénération et activation des brins d'ADN — ancrage biologique de la nouvelle fréquence</li>
+        <li>6 PDF de ressources remis chaque soir (enseignement complet + questions d'introspection)</li>
+        <li>Groupe Telegram privé pour les échanges pendant le programme</li>
+        <li>Replay de chaque session disponible</li>
+        <li>Possibilité de poursuivre l'accompagnement après le programme avec son ou sa consultant(e) attitré(e)</li>
+        <li><strong>Accès à vie à la communauté privée Discord</strong> — fédérée autour de la souveraineté, pour nouer des liens durables avec les autres alumni du programme</li>
+        <li>Groupe fermé — 10 participant(e)s maximum pour une vraie profondeur de travail</li>
+      </ul>
+
+      <div class="urgence">
+        <strong>✦ Une session par mois.</strong> Pour connaître les prochaines dates disponibles, écrivez-nous sur Telegram au 07 83 65 53 80. Les places sont limitées à 10 par session — le groupe se ferme dès que le quota est atteint.
+      </div>
+
+      <a href="mailto:contact@princessetchassi.com?subject=Inscription%20Transmutation%20Relationnelle" class="cta-btn">
+        Réserver ma place · Paiement comptant
+      </a>
+      <a href="https://t.me/+330783655380" class="cta-klarna">
+        Écrire sur Telegram pour s'inscrire
+      </a>
+      <p class="cta-note">Telegram : 07 83 65 53 80 · Email : contact@princessetchassi.com · Paiement Klarna sous réserve d'acceptation</p>
+    </div>
+  </div>
+</section>
+
+<!-- DISCORD -->
+<section style="background: linear-gradient(160deg, #1A0808 0%, #2D1010 60%, #3D1818 100%); padding: 100px 40px; position: relative; overflow: hidden;">
+  <div style="position: absolute; top: -60px; right: -60px; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(201,169,110,0.06) 0%, transparent 70%); pointer-events: none;"></div>
+  <div style="position: absolute; bottom: -80px; left: -40px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(232,165,152,0.05) 0%, transparent 70%); pointer-events: none;"></div>
+  <div style="max-width: 860px; margin: 0 auto; position: relative; z-index: 2;" class="reveal">
+    <div style="text-align: center; margin-bottom: 64px;">
+      <p style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 6px; color: var(--or); text-transform: uppercase; margin-bottom: 20px;">Ce qui commence ici ne s'arrête pas au Jour 6</p>
+      <h2 style="font-family: 'Cinzel', serif; font-size: clamp(28px, 5vw, 48px); font-weight: 400; color: var(--blanc); margin-bottom: 16px;">La Communauté des Souverains</h2>
+      <div style="width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--or), transparent); margin: 24px auto;"></div>
+      <p style="font-size: clamp(18px, 2.5vw, 24px); font-style: italic; color: rgba(253,248,245,0.75); font-weight: 300; max-width: 640px; margin: 0 auto;">Un espace privé sur Discord. Réservé aux alumni du programme. À vie.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 60px;">
+      <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(201,169,110,0.15); padding: 40px 32px;">
+        <div style="font-size: 28px; margin-bottom: 16px; color: var(--or);">◈</div>
+        <div style="font-family: 'Cinzel', serif; font-size: 13px; color: var(--or); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px;">Un seul critère d'entrée</div>
+        <p style="font-size: 17px; line-height: 1.8; color: rgba(253,248,245,0.7); font-weight: 300;">On n'entre pas dans cette communauté parce qu'on a payé un abonnement. On y entre parce qu'on a fait le travail. Avoir traversé le programme est le seul ticket d'accès. Ce filtre garantit la qualité vibratoire du collectif.</p>
+      </div>
+      <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(201,169,110,0.15); padding: 40px 32px;">
+        <div style="font-size: 28px; margin-bottom: 16px; color: var(--or);">✦</div>
+        <div style="font-family: 'Cinzel', serif; font-size: 13px; color: var(--or); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px;">Des liens qui ont du sens</div>
+        <p style="font-size: 17px; line-height: 1.8; color: rgba(253,248,245,0.7); font-weight: 300;">Après avoir travaillé sur ses schémas, ses blessures et sa fréquence, les connexions qui se créent dans ce collectif ne sont pas des relations de surface. Ce sont des liens entre personnes qui ont choisi de se connaître vraiment.</p>
+      </div>
+      <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(201,169,110,0.15); padding: 40px 32px;">
+        <div style="font-size: 28px; margin-bottom: 16px; color: var(--or);">⟡</div>
+        <div style="font-family: 'Cinzel', serif; font-size: 13px; color: var(--or); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px;">Fédéré autour d'une vision</div>
+        <p style="font-size: 17px; line-height: 1.8; color: rgba(253,248,245,0.7); font-weight: 300;">La souveraineté n'est pas une destination solitaire. Ce Discord est l'espace où ceux et celles qui ont choisi de vivre autrement — lucides, alignés, souverains — se retrouvent, s'encouragent et avancent ensemble.</p>
+      </div>
+      <div style="background: rgba(201,169,110,0.06); border: 1px solid rgba(201,169,110,0.25); padding: 40px 32px;">
+        <div style="font-size: 28px; margin-bottom: 16px; color: var(--or);">◯</div>
+        <div style="font-family: 'Cinzel', serif; font-size: 13px; color: var(--or); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px;">À vie — sans condition</div>
+        <p style="font-size: 17px; line-height: 1.8; color: rgba(253,248,245,0.7); font-weight: 300;">L'accès à la communauté est permanent. Chaque nouvelle promotion rejoint le même espace et enrichit le collectif. Avec le temps, ce Discord deviendra l'un des réseaux les plus puissants et les plus alignés qui soit.</p>
+      </div>
+    </div>
+
+    <div style="border: 1px solid rgba(201,169,110,0.3); padding: 48px; text-align: center; background: rgba(0,0,0,0.2);">
+      <p style="font-size: clamp(20px, 3vw, 30px); font-style: italic; color: var(--blanc); line-height: 1.5; font-weight: 300; margin-bottom: 20px;">
+        « On ne peut pas construire une vie souveraine dans l'isolement.<br>Le collectif est la prochaine frontière — après avoir réglé le rapport à soi. »
+      </p>
+      <p style="font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 4px; color: var(--or); text-transform: uppercase;">— Princesse Tchassi</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="faq-inner reveal">
+    <div class="faq-header">
+      <h2 class="section-title dark">Questions fréquentes</h2>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Qu'est-ce que la communauté Discord — et comment y accède-t-on ?
+        <span class="faq-arrow">+</span>
+      </div>
+      <div class="faq-a">
+        À l'issue du programme, chaque participant(e) reçoit une invitation permanente au Discord privé de la communauté. C'est un espace réservé exclusivement aux alumni — ceux et celles qui ont traversé le programme. Aucun abonnement, aucune condition supplémentaire : l'accès est à vie, inclus dans le programme. Le Discord est organisé autour de la souveraineté : partages, ressources, événements, et connexions entre membres de toutes les promotions.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Est-ce que ce programme est fait pour moi si je ne connais pas la radiesthésie ?
+        <span class="faq-arrow">+</span>
+      </div>
+      <div class="faq-a">
+        Absolument. Vous n'avez besoin d'aucun prérequis technique. La radiesthésie est l'outil — elle travaille pour vous, pas avec vous. Ce qui compte, c'est votre engagement dans l'introspection et votre désir de transformation. Le reste, je m'en occupe.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Est-ce que toutes les participantes reçoivent un scan individuel — et par qui ?
+        <span class="faq-arrow">+</span>
+      </div>
+      <div class="faq-a">
+        Oui — chaque participant(e) reçoit son propre scan chaque jour, en direct sur Google Meet. Et surtout : un(e) <strong>consultant(e) en radiesthésie lui est attitré(e) pour toute la durée du programme</strong>, sélectionné(e) par matching vibratoire. Ce ou cette consultant(e) est responsable des scans quotidiens, suit l'évolution du travail d'introspection et observe les devoirs de la veille avec une continuité et une précision que seul un suivi personnalisé peut offrir. À l'issue du programme, il est possible de poursuivre avec son ou sa consultant(e) attitré(e) dans un suivi individuel.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Comment se déroule concrètement une journée ?
+        <span class="faq-arrow">+</span>
+      </div>
+      <div class="faq-a">
+        Chaque journée comprend : un live collectif sur Google Meet avec l'enseignement du jour, le soin énergétique collectif et la transmission — puis les scans individuels pour chaque participante. La veille, vous recevez vos questions d'introspection à compléter seule. Le scan du lendemain vient lire ce que vous avez exploré et agir en miroir vibratoire précis.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Est-ce que je peux rejoindre si je suis dans une relation actuellement compliquée ?
+        <span class="faq-arrow">+</span>
+      </div>
+      <div class="faq-a">
+        C'est même souvent dans ces moments-là que le travail est le plus puissant. Ce programme n'est pas conçu pour vous dire quoi faire de votre relation — il est conçu pour vous donner la clarté et le pouvoir de décider par vous-même, depuis un état souverain plutôt que depuis la peur.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Comment connaître les prochaines dates du programme ?
+        <span class="faq-arrow">+</span>
+      </div>
+      <div class="faq-a">
+        Le programme se déroule une fois par mois sur 6 jours consécutifs. Les dates varient selon le calendrier vibratoire de chaque session. Pour connaître la prochaine date disponible et vérifier s'il reste des places, écrivez-nous directement sur Telegram au <strong>07 83 65 53 80</strong> ou à contact@princessetchassi.com. Nous répondons personnellement.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Comment fonctionne le paiement en 3 fois avec Klarna ?
+        <span class="faq-arrow">+</span>
+      </div>
+      <div class="faq-a">
+        Le paiement en 3 fois est proposé via Klarna — soit 3 × 200€. Il est soumis à l'acceptation de Klarna selon leur processus de validation habituel. Pour initier ce mode de paiement, contactez-nous sur Telegram au 07 83 65 53 80 ou par email à contact@princessetchassi.com.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Y a-t-il des replays si je ne peux pas assister à une session en direct ?
+        <span class="faq-arrow">+</span>
+      </div>
+      <div class="faq-a">
+        Oui. Chaque session est enregistrée et le replay vous est remis dans les 24 heures. L'idéal reste de participer en direct pour bénéficier pleinement du scan individuel et de la transmission en temps réel — mais la flexibilité est possible.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Comment vous contacter pour s'inscrire ou poser une question ?
+        <span class="faq-arrow">+</span>
+      </div>
+      <div class="faq-a">
+        Contactez-moi directement sur Telegram au <strong>07 83 65 53 80</strong> — c'est le moyen le plus rapide. Vous pouvez également écrire à contact@princessetchassi.com. Je réponds personnellement à chaque message.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-name">Princesse Tchassi</div>
+  <div class="footer-sep"></div>
+  <div class="footer-links">
+    <a href="https://t.me/+330783655380">Telegram : 07 83 65 53 80</a>
+    <a href="mailto:contact@princessetchassi.com">contact@princessetchassi.com</a>
+    <a href="https://princessetchassi.fr">princessetchassi.fr</a>
+  </div>
+  <div style="margin-top: 24px; color: rgba(253,248,245,0.2); font-size: 12px; font-style: italic;">
+    © 2026 Princesse Tchassi — SIREN 808 654 719 — Asnières-sur-Seine
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // FAQ toggle
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Day cards stagger
+  document.querySelectorAll('.day-card').forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateX(-20px)';
+    card.style.transition = `opacity 0.5s ease ${i * 0.1}s, transform 0.5s ease ${i * 0.1}s`;
+  });
+
+  const progObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        document.querySelectorAll('.day-card').forEach(card => {
+          card.style.opacity = '1';
+          card.style.transform = 'translateX(0)';
+        });
+      }
+    });
+  }, { threshold: 0.2 });
+
+  const progSection = document.querySelector('.programme');
+  if (progSection) progObserver.observe(progSection);
+</script>
+
+</body>
+</html>
